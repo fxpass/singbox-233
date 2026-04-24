@@ -4,7 +4,7 @@
 # 如果你想手动指定端口，可以在执行时输入，例如：bash script.sh 5555
 SOCKS_PORT=${1:-"10080"} 
 FSCARMEN_CONF_DIR="/etc/sing-box/conf"
-NEW_CONF_FILE="$FSCARMEN_CONF_DIR/socks_233.json"
+NEW_CONF_FILE="$FSCARMEN_CONF_DIR/22_socks_inbounds.json"
 
 # --- 准备工作 ---
 mkdir -p $FSCARMEN_CONF_DIR
