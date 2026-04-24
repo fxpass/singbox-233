@@ -58,14 +58,18 @@ main() {
 
     # 0. 安装必要依赖 (wget, tar, jq)
     echo -e "${yellow}检查并安装必要依赖...${none}"
-    if [[ -f /usr/bin/apt ]]; then
-        apt update && apt install -y wget tar jq
-    elif [[ -f /sbin/apk ]]; then
-        apk add wget tar jq gcompat
-    elif [[ -f /usr/bin/yum ]]; then
-        yum install -y wget tar jq
+    if type -P apt-get >/dev/null 2>&1; then
+        apt-get update && apt-get install -y wget tar jq
+    elif type -P apk >/dev/null 2>&1; then
+        apk update && apk add wget tar jq gcompat
+    elif type -P yum >/dev/null 2>&1; then
+        yum install -y epel-release && yum install -y wget tar jq
+    else
+        # 如果以上都没找到，尝试直接执行下载
+        echo -e "${red}未找到包管理器，尝试直接下载 jq...${none}"
+        _wget -O /usr/bin/jq https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux64 && chmod +x /usr/bin/jq
     fi
-
+    
     # 2. 核心内核复用逻辑 (针对 NAT 小鸡已安装 fscarmen 的情况)
     # 检查 fscarmen 二进制路径
     fscarmen_bin="/etc/sing-box/sing-box"
