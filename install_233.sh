@@ -38,7 +38,7 @@ mv $is_core_dir/bin/sing-box $is_core_bin
 chmod +x $is_core_bin
 
 # 4. 创建别名与软链接
-ln -sf $is_core_dir/sh/sing-box.sh /usr/local/bin/sb233
+ln -sf $is_core_dir/sing-box.sh /usr/local/bin/sb233
 echo "alias sb233='/usr/local/bin/sb233'" >> /root/.bashrc
 
 # 5. 生成对应的 systemd 服务
