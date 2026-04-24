@@ -25,7 +25,6 @@ cat <<EOF > $NEW_CONF_FILE
       "tag": "socks-in-233",
       "listen": "::",
       "listen_port": $SOCKS_PORT,
-      "sniff": true,
       "users": [
         {
           "username": "$SOCKS_USER",
