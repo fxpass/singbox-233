@@ -68,7 +68,7 @@ main() {
 
     # 2. 复用二进制文件 (软链接)
     ln -sf /etc/sing-box/sing-box $is_core_bin
-    echo -e "${green}已成功复用原内核：$(/usr/local/bin/sing-box version | head -n 1)${none}"
+    echo -e "${green}已成功复用原内核：$(/etc/sing-box/sing-box version | head -n 1)${none}"
 
     # 3. 下载并解压管理脚本
     download_sh
