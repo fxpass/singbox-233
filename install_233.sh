@@ -56,6 +56,16 @@ main() {
     # 1. 环境清理与目录创建
     mkdir -p $is_core_dir $is_sh_dir $is_core_dir/bin $is_conf_dir $is_log_dir
 
+    # 0. 安装必要依赖 (wget, tar, jq)
+    echo -e "${yellow}检查并安装必要依赖...${none}"
+    if [[ -f /usr/bin/apt ]]; then
+        apt update && apt install -y wget tar jq
+    elif [[ -f /sbin/apk ]]; then
+        apk add wget tar jq gcompat
+    elif [[ -f /usr/bin/yum ]]; then
+        yum install -y wget tar jq
+    fi
+
     # 2. 核心内核复用逻辑 (针对 NAT 小鸡已安装 fscarmen 的情况)
     # 检查 fscarmen 二进制路径
     fscarmen_bin="/etc/sing-box/sing-box"
