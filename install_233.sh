@@ -60,14 +60,14 @@ main() {
     
     mkdir -p $is_core_dir $is_sh_dir $is_core_dir/bin $is_conf_dir $is_log_dir
 
-    # 1. 检查 fscarmen 的二进制文件是否存在
-    if [[ ! -f /usr/local/bin/sing-box ]]; then
-        echo -e "${red}错误：未发现 fscarmen 的 sing-box 二进制文件 (/usr/local/bin/sing-box)${none}"
+    # 1. 检查 fscarmen 的二进制文件是否存在 (修改为你的实际路径)
+    if [[ ! -f /etc/sing-box/sing-box ]]; then
+        echo -e "${red}错误：未发现 fscarmen 的 sing-box 二进制文件 (/etc/sing-box/sing-box)${none}"
         exit 1
     fi
 
     # 2. 复用二进制文件 (软链接)
-    ln -sf /usr/local/bin/sing-box $is_core_bin
+    ln -sf /etc/sing-box/sing-box $is_core_bin
     echo -e "${green}已成功复用原内核：$(/usr/local/bin/sing-box version | head -n 1)${none}"
 
     # 3. 下载并解压管理脚本
