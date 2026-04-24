@@ -1,22 +1,34 @@
 #!/bin/bash
 
 # --- 参数设置 ---
-# 如果你想手动指定端口，可以在执行时输入，例如：bash script.sh 5555
+# $1: 端口号 (默认 10080)
+# $2: UUID (不指定则随机生成)
 SOCKS_PORT=${1:-"10080"} 
+INPUT_UUID=$2
+
 FSCARMEN_CONF_DIR="/etc/sing-box/conf"
 NEW_CONF_FILE="$FSCARMEN_CONF_DIR/22_socks_inbounds.json"
 
 # --- 准备工作 ---
 mkdir -p $FSCARMEN_CONF_DIR
 
-# 生成 UUID
-MY_UUID=$(cat /proc/sys/kernel/random/uuid)
+# --- UUID 处理逻辑 ---
+if [ -z "$INPUT_UUID" ]; then
+    # 如果用户没提供 UUID，则随机生成
+    MY_UUID=$(cat /proc/sys/kernel/random/uuid)
+    echo -e "\033[33m未指定 UUID，已生成随机 UUID: $MY_UUID\033[0m"
+else
+    # 使用用户提供的 UUID
+    MY_UUID=$INPUT_UUID
+    echo -e "\033[32m使用指定的 UUID: $MY_UUID\033[0m"
+fi
 
 # 提取字段：用户名(第一段)，密码(最后一段)
 SOCKS_USER=$(echo $MY_UUID | cut -d '-' -f 1)
 SOCKS_PASS=$(echo $MY_UUID | cut -d '-' -f 5)
 
 # --- 生成 SOCKS 配置 ---
+# 注意：已移除 legacy 字段以适配新版 sing-box
 cat <<EOF > $NEW_CONF_FILE
 {
   "inbounds": [
